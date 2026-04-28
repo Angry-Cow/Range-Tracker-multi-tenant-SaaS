@@ -105,14 +105,11 @@ export function PhotoSlot({
     ? (getPublicUrl ? getPublicUrl(photoUrl) : photoUrl)
     : null;
 
-  const showRotate = !!(preview || photoUrl);
-
   return (
     <div className="border border-slate-200 rounded-lg p-4">
       <h4 className="font-medium text-slate-700 mb-3">Photo {num}</h4>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">Upload Photo</label>
           <input
             ref={fileInputRef}
             type="file"
@@ -123,48 +120,53 @@ export function PhotoSlot({
             }}
             className="hidden"
           />
-          <div
-            onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
-            onDrop={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              const file = e.dataTransfer.files?.[0];
-              if (file && file.type.startsWith('image/')) onFileChange?.(file);
-            }}
-            onClick={() => fileInputRef.current?.click()}
-            className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all border-slate-300 hover:border-emerald-400 hover:bg-slate-50"
-          >
-            {displaySrc ? (
-              <div className="relative rounded-lg overflow-hidden">
+          {displaySrc ? (
+            <div>
+              <div className="rounded-lg overflow-hidden">
                 <RotatedImage
                   src={displaySrc}
-                  alt={`Preview ${num}`}
+                  alt={`Photo ${num}`}
                   className="w-full h-auto rounded-lg transition-transform duration-300"
                   rotation={rotation}
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-40 transition-all rounded-lg flex items-center justify-center">
-                  <Upload className="w-8 h-8 text-white opacity-0 hover:opacity-100 transition-opacity" />
-                </div>
               </div>
-            ) : (
+              <div className="flex items-center gap-2 mt-2">
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors"
+                >
+                  <Upload className="w-3.5 h-3.5" />
+                  Replace
+                </button>
+                <button
+                  type="button"
+                  onClick={onRotate}
+                  className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors"
+                  title="Rotate 90° clockwise"
+                >
+                  <RotateCw className="w-3.5 h-3.5" />
+                  Rotate
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div
+              onDragOver={(e) => { e.preventDefault(); e.stopPropagation(); }}
+              onDrop={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                const file = e.dataTransfer.files?.[0];
+                if (file && file.type.startsWith('image/')) onFileChange?.(file);
+              }}
+              onClick={() => fileInputRef.current?.click()}
+              className="border-2 border-dashed rounded-lg p-6 text-center cursor-pointer transition-all border-slate-300 hover:border-emerald-400 hover:bg-slate-50"
+            >
               <div className="py-8">
                 <Camera className="w-12 h-12 text-slate-400 mx-auto mb-3" />
                 <p className="text-sm text-slate-600 font-medium mb-1">Drop image here or click to upload</p>
                 <p className="text-xs text-slate-500">PNG, JPG, GIF up to 10MB</p>
               </div>
-            )}
-          </div>
-          {showRotate && (
-            <div className="flex justify-end mt-2">
-              <button
-                type="button"
-                onClick={(e) => { e.stopPropagation(); onRotate?.(); }}
-                className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors"
-                title="Rotate 90° clockwise"
-              >
-                <RotateCw className="w-3.5 h-3.5" />
-                Rotate
-              </button>
             </div>
           )}
         </div>
