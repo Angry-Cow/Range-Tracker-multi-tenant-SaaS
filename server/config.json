@@ -1,0 +1,17 @@
+{
+  "port": 3001,
+  "database": {
+    "host": "db.eustespordcqqytqpvsx.supabase.co",
+    "port": 5432,
+    "name": "postgres",
+    "user": "postgres",
+    "password": "XG46G6xf3hgPG9KA",
+    "ssl": true
+  },
+  "jwtSecret": "change-this-to-a-long-random-secret",
+  "uploadDir": "uploads",
+  "adminUsername": "admin",
+  "adminPasswordHash": "$2b$10$placeholder-run-setup-to-generate",
+  "registrationMode": "approval",
+  "appName": "Range Tracker"
+}
