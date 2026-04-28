@@ -101,8 +101,8 @@ export function PhotoSlot({
 
   const displaySrc = preview
     ? preview
-    : photoUrl && getPublicUrl
-    ? getPublicUrl(photoUrl)
+    : photoUrl
+    ? (getPublicUrl ? getPublicUrl(photoUrl) : photoUrl)
     : null;
 
   const showRotate = !!(preview || photoUrl);

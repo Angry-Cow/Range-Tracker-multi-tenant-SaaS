@@ -222,7 +222,7 @@ export function getTenantInfo(): { slug: string; token: string } | null {
 
 export function getPhotoPublicUrl(path: string): string {
   if (!path) return '';
-  if (path.startsWith('http://') || path.startsWith('https://')) return path;
+  if (path.startsWith('http://') || path.startsWith('https://') || path.startsWith('data:')) return path;
   const { data } = supabaseStorageClient.storage.from('range-photos').getPublicUrl(path);
   return data.publicUrl;
 }
