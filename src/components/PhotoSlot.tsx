@@ -112,6 +112,8 @@ export function PhotoSlot({
         <div>
           <input
             ref={fileInputRef}
+            id={`photo-file-${num}`}
+            aria-label={`Upload photo ${num}`}
             type="file"
             accept="image/*"
             onChange={(e) => {
@@ -133,6 +135,7 @@ export function PhotoSlot({
               <div className="flex items-center gap-2 mt-2">
                 <button
                   type="button"
+                  aria-label={`Replace photo ${num}`}
                   onClick={() => fileInputRef.current?.click()}
                   className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors"
                 >
@@ -141,6 +144,7 @@ export function PhotoSlot({
                 </button>
                 <button
                   type="button"
+                  aria-label={`Rotate photo ${num} 90 degrees clockwise`}
                   onClick={onRotate}
                   className="flex items-center gap-1.5 text-xs text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors"
                   title="Rotate 90° clockwise"
@@ -171,8 +175,9 @@ export function PhotoSlot({
           )}
         </div>
         <div>
-          <label className="block text-sm font-medium text-slate-700 mb-2">Notes</label>
+          <label htmlFor={`photo-notes-${num}`} className="block text-sm font-medium text-slate-700 mb-2">Notes</label>
           <textarea
+            id={`photo-notes-${num}`}
             value={notes}
             onChange={(e) => onNotesChange?.(e.target.value)}
             rows={4}
@@ -185,6 +190,7 @@ export function PhotoSlot({
         <div className="flex items-center justify-end gap-3 mt-3 pt-3 border-t border-slate-100">
           <button
             type="button"
+            aria-label={`Save photo ${num} progress`}
             onClick={onSave}
             disabled={saving}
             className="disabled:cursor-not-allowed text-white px-4 py-1.5 text-sm rounded-lg transition-colors flex items-center gap-2 bg-primary-900 hover:bg-primary-800 disabled:bg-slate-500"

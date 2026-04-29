@@ -75,6 +75,8 @@ export function NewShooterScreen() {
       <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <button
+            type="button"
+            aria-label="Back"
             onClick={handleCancel}
             className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
           >
@@ -95,10 +97,11 @@ export function NewShooterScreen() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="new-shooter-first-name" className="block text-sm font-medium text-slate-700 mb-1">
                 First Name *
               </label>
               <input
+                id="new-shooter-first-name"
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -109,10 +112,11 @@ export function NewShooterScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="new-shooter-last-name" className="block text-sm font-medium text-slate-700 mb-1">
                 Last Name *
               </label>
               <input
+                id="new-shooter-last-name"
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -123,10 +127,11 @@ export function NewShooterScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="new-shooter-email" className="block text-sm font-medium text-slate-700 mb-1">
                 Email
               </label>
               <input
+                id="new-shooter-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -136,10 +141,11 @@ export function NewShooterScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="new-shooter-phone" className="block text-sm font-medium text-slate-700 mb-1">
                 Phone Number
               </label>
               <input
+                id="new-shooter-phone"
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -149,10 +155,11 @@ export function NewShooterScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="new-shooter-notes" className="block text-sm font-medium text-slate-700 mb-1">
                 Notes
               </label>
               <textarea
+                id="new-shooter-notes"
                 value={notes}
                 onChange={(e) => setNotes(e.target.value)}
                 rows={3}

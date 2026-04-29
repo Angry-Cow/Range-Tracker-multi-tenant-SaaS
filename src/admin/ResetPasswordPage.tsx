@@ -62,8 +62,9 @@ export function ResetPasswordPage({ token, onDone }: Props) {
             <form onSubmit={handleSubmit} className="space-y-4">
               <p className="text-sm text-slate-600">Choose a new password for the admin account.</p>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
+                <label htmlFor="admin-reset-new-password" className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
                 <input
+                  id="admin-reset-new-password"
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
@@ -74,8 +75,9 @@ export function ResetPasswordPage({ token, onDone }: Props) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
+                <label htmlFor="admin-reset-confirm-password" className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
                 <input
+                  id="admin-reset-confirm-password"
                   type="password"
                   value={confirm}
                   onChange={(e) => setConfirm(e.target.value)}

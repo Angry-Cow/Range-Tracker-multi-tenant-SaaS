@@ -134,6 +134,7 @@ export function PaymentVerificationFailedScreen() {
         <div className="space-y-3">
           {pendingPlan && (
             <button
+              type="button"
               onClick={handleRetry}
               disabled={retrying}
               className="w-full text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-60 bg-primary-900 hover:bg-primary-800"
@@ -144,6 +145,7 @@ export function PaymentVerificationFailedScreen() {
           )}
 
           <button
+            type="button"
             onClick={() => setShowReportModal(true)}
             className="w-full font-semibold py-3 rounded-lg border-2 transition-colors"
             style={{ borderColor: '#093057', color: '#093057' }}
@@ -154,6 +156,7 @@ export function PaymentVerificationFailedScreen() {
           </button>
 
           <button
+            type="button"
             onClick={handleRefreshCheck}
             disabled={retrying}
             className="w-full text-slate-600 font-medium py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm disabled:opacity-60"
@@ -162,6 +165,7 @@ export function PaymentVerificationFailedScreen() {
           </button>
 
           <button
+            type="button"
             onClick={handleCancelAndSignOut}
             className="w-full text-slate-500 font-medium py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm flex items-center justify-center gap-2"
           >
@@ -189,6 +193,7 @@ export function PaymentVerificationFailedScreen() {
                   to investigate the problem and activate your plan manually if appropriate.
                 </p>
                 <button
+                  type="button"
                   onClick={() => { setShowReportModal(false); setReportSubmitted(false); setReportDescription(''); }}
                   className="w-full text-white font-semibold py-3 rounded-lg transition-colors"
                   style={{ backgroundColor: '#093057' }}
@@ -201,6 +206,8 @@ export function PaymentVerificationFailedScreen() {
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-bold text-slate-900">Report the Issue</h3>
                   <button
+                    type="button"
+                    aria-label="Close"
                     onClick={() => setShowReportModal(false)}
                     className="text-slate-400 hover:text-slate-600 transition-colors"
                   >
@@ -209,8 +216,9 @@ export function PaymentVerificationFailedScreen() {
                 </div>
                 <form onSubmit={handleReportSubmit} className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                    <label htmlFor="pvf-report-name" className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                     <input
+                      id="pvf-report-name"
                       type="text"
                       value={reportName}
                       onChange={e => setReportName(e.target.value)}
@@ -219,8 +227,9 @@ export function PaymentVerificationFailedScreen() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                    <label htmlFor="pvf-report-email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
                     <input
+                      id="pvf-report-email"
                       type="email"
                       value={reportEmail}
                       onChange={e => setReportEmail(e.target.value)}
@@ -229,10 +238,11 @@ export function PaymentVerificationFailedScreen() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label htmlFor="pvf-report-description" className="block text-sm font-medium text-slate-700 mb-1">
                       What happened? <span className="text-slate-400">(optional)</span>
                     </label>
                     <textarea
+                      id="pvf-report-description"
                       value={reportDescription}
                       onChange={e => setReportDescription(e.target.value)}
                       rows={3}

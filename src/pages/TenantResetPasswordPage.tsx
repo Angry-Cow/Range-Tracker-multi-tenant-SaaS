@@ -67,8 +67,9 @@ export function TenantResetPasswordPage({ token }: Props) {
           <form onSubmit={handleSubmit} className="space-y-4">
             <p className="text-sm text-slate-600">Choose a new password for your account. It must be at least 8 characters and include uppercase, lowercase, a number, and a special character.</p>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
+              <label htmlFor="reset-new-password" className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
               <input
+                id="reset-new-password"
                 type="password"
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
@@ -79,8 +80,9 @@ export function TenantResetPasswordPage({ token }: Props) {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
+              <label htmlFor="reset-confirm-password" className="block text-sm font-medium text-slate-700 mb-1">Confirm Password</label>
               <input
+                id="reset-confirm-password"
                 type="password"
                 value={confirm}
                 onChange={(e) => setConfirm(e.target.value)}

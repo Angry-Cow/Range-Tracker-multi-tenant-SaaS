@@ -280,6 +280,8 @@ export function RangeRecordScreen() {
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <div className="flex items-start justify-between mb-6">
             <button
+              type="button"
+              aria-label="Back to Home"
               onClick={() => setCurrentScreen('home')}
               className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors"
             >
@@ -287,6 +289,8 @@ export function RangeRecordScreen() {
               Back to Home
             </button>
             <button
+              type="button"
+              aria-label="Log out"
               onClick={() => { clearTenantCredentials(); window.location.reload(); }}
               className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-600 transition-colors border border-slate-200 hover:border-red-300 px-3 py-1.5 rounded-lg"
             >
@@ -317,10 +321,11 @@ export function RangeRecordScreen() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-date" className="block text-sm font-medium text-slate-700 mb-1">
                     Date
                   </label>
                   <input
+                    id="record-date"
                     type="date"
                     value={formData.record_date}
                     onChange={(e) =>
@@ -331,10 +336,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-range-location" className="block text-sm font-medium text-slate-700 mb-1">
                     Range Location
                   </label>
                   <select
+                    id="record-range-location"
                     value={formData.range_location}
                     onChange={(e) =>
                       setFormData({ ...formData, range_location: e.target.value })
@@ -351,10 +357,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-range-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Range Type
                   </label>
                   <select
+                    id="record-range-type"
                     value={formData.range_type}
                     onChange={(e) =>
                       setFormData({ ...formData, range_type: e.target.value })
@@ -371,10 +378,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-practice-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Practice Type
                   </label>
                   <select
+                    id="record-practice-type"
                     value={formData.practice_type}
                     onChange={(e) =>
                       setFormData({ ...formData, practice_type: e.target.value })
@@ -391,10 +399,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-target-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Target Type
                   </label>
                   <select
+                    id="record-target-type"
                     value={formData.target_type}
                     onChange={(e) =>
                       setFormData({ ...formData, target_type: e.target.value })
@@ -411,10 +420,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-target-distance" className="block text-sm font-medium text-slate-700 mb-1">
                     Target Distance
                   </label>
                   <select
+                    id="record-target-distance"
                     value={formData.target_distance}
                     onChange={(e) =>
                       setFormData({ ...formData, target_distance: e.target.value })
@@ -431,10 +441,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-shooting-position" className="block text-sm font-medium text-slate-700 mb-1">
                     Shooting Position
                   </label>
                   <select
+                    id="record-shooting-position"
                     value={formData.shooting_position}
                     onChange={(e) =>
                       setFormData({ ...formData, shooting_position: e.target.value })
@@ -451,10 +462,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-firearm-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Firearm Type
                   </label>
                   <select
+                    id="record-firearm-type"
                     value={formData.firearm_type}
                     onChange={(e) =>
                       setFormData({ ...formData, firearm_type: e.target.value })
@@ -471,10 +483,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-firearm-model" className="block text-sm font-medium text-slate-700 mb-1">
                     Firearm Model
                   </label>
                   <select
+                    id="record-firearm-model"
                     value={formData.firearm_model}
                     onChange={(e) =>
                       setFormData({ ...formData, firearm_model: e.target.value })
@@ -491,10 +504,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-ammunition" className="block text-sm font-medium text-slate-700 mb-1">
                     Ammunition
                   </label>
                   <select
+                    id="record-ammunition"
                     value={formData.ammunition}
                     onChange={(e) =>
                       setFormData({ ...formData, ammunition: e.target.value })
@@ -511,10 +525,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-conditions" className="block text-sm font-medium text-slate-700 mb-1">
                     Conditions
                   </label>
                   <input
+                    id="record-conditions"
                     type="text"
                     value={formData.conditions}
                     onChange={(e) =>
@@ -525,10 +540,11 @@ export function RangeRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="record-weather" className="block text-sm font-medium text-slate-700 mb-1">
                     Weather
                   </label>
                   <input
+                    id="record-weather"
                     type="text"
                     value={formData.weather}
                     onChange={(e) =>
@@ -581,10 +597,11 @@ export function RangeRecordScreen() {
                   ))}
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <label htmlFor="record-additional-notes" className="block text-sm font-medium text-slate-700 mb-2">
                       Additional Notes
                     </label>
                     <textarea
+                      id="record-additional-notes"
                       value={formData.additional_notes}
                       onChange={(e) =>
                         setFormData({ ...formData, additional_notes: e.target.value })

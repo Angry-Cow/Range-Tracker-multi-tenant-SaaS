@@ -195,6 +195,8 @@ export function HomeScreen() {
               </div>
             </div>
             <button
+              type="button"
+              aria-label="Log out"
               onClick={() => { clearTenantCredentials(); window.location.reload(); }}
               className="flex items-center gap-2 text-sm text-slate-500 hover:text-red-600 transition-colors border border-slate-200 hover:border-red-300 px-3 py-1.5 rounded-lg"
             >
@@ -261,13 +263,14 @@ export function HomeScreen() {
 
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                  <label htmlFor="home-shooter-select" className="block text-sm font-medium text-slate-700 mb-2">
                     Select Shooter
                   </label>
                   {loading ? (
                     <div className="text-slate-500">Loading shooters...</div>
                   ) : (
                     <select
+                      id="home-shooter-select"
                       value={selectedShooterId}
                       onChange={(e) => handleShooterSelect(e.target.value)}
                       className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:border-transparent text-slate-900"

@@ -336,6 +336,8 @@ export function ViewRecordScreen() {
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <div className="flex items-start justify-between mb-6">
             <button
+              type="button"
+              aria-label="Back to Records"
               onClick={() => setCurrentScreen('previous-records')}
               className="flex items-center gap-2 text-slate-600 hover:text-slate-900 transition-colors"
             >
@@ -347,6 +349,7 @@ export function ViewRecordScreen() {
               {!isEditMode ? (
                 <>
                   <button
+                    type="button"
                     onClick={handleExportPDF}
                     disabled={exporting}
                     className="bg-slate-600 hover:bg-slate-700 disabled:bg-slate-400 disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
@@ -355,6 +358,7 @@ export function ViewRecordScreen() {
                     {exporting ? 'Exporting...' : 'Download PDF'}
                   </button>
                   <button
+                    type="button"
                     onClick={() => setIsEditMode(true)}
                     className="text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2 bg-primary-900 hover:bg-primary-800"
                   >
@@ -365,6 +369,7 @@ export function ViewRecordScreen() {
               ) : (
                 <>
                   <button
+                    type="button"
                     onClick={handleCancelEdit}
                     className="bg-slate-200 hover:bg-slate-300 text-slate-900 px-4 py-2 rounded-lg transition-colors flex items-center gap-2"
                   >
@@ -372,6 +377,7 @@ export function ViewRecordScreen() {
                     Cancel
                   </button>
                   <button
+                    type="button"
                     onClick={handleSave}
                     disabled={saving}
                     className="disabled:cursor-not-allowed text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2 bg-primary-900 hover:bg-primary-800 disabled:bg-slate-500"
@@ -510,10 +516,11 @@ export function ViewRecordScreen() {
             <form onSubmit={(e) => { e.preventDefault(); handleSave(); }} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-record-date" className="block text-sm font-medium text-slate-700 mb-1">
                     Date
                   </label>
                   <input
+                    id="edit-record-date"
                     type="date"
                     value={formData.record_date}
                     onChange={(e) =>
@@ -524,10 +531,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-range-location" className="block text-sm font-medium text-slate-700 mb-1">
                     Range Location
                   </label>
                   <select
+                    id="edit-range-location"
                     value={formData.range_location}
                     onChange={(e) =>
                       setFormData({ range_location: e.target.value })
@@ -544,10 +552,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-range-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Range Type
                   </label>
                   <select
+                    id="edit-range-type"
                     value={formData.range_type}
                     onChange={(e) =>
                       setFormData({ range_type: e.target.value })
@@ -564,10 +573,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-practice-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Practice Type
                   </label>
                   <select
+                    id="edit-practice-type"
                     value={formData.practice_type}
                     onChange={(e) =>
                       setFormData({ practice_type: e.target.value })
@@ -584,10 +594,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-target-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Target Type
                   </label>
                   <select
+                    id="edit-target-type"
                     value={formData.target_type}
                     onChange={(e) =>
                       setFormData({ target_type: e.target.value })
@@ -604,10 +615,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-target-distance" className="block text-sm font-medium text-slate-700 mb-1">
                     Target Distance
                   </label>
                   <select
+                    id="edit-target-distance"
                     value={formData.target_distance}
                     onChange={(e) =>
                       setFormData({ target_distance: e.target.value })
@@ -624,10 +636,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-shooting-position" className="block text-sm font-medium text-slate-700 mb-1">
                     Shooting Position
                   </label>
                   <select
+                    id="edit-shooting-position"
                     value={formData.shooting_position}
                     onChange={(e) =>
                       setFormData({ shooting_position: e.target.value })
@@ -644,10 +657,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-firearm-type" className="block text-sm font-medium text-slate-700 mb-1">
                     Firearm Type
                   </label>
                   <select
+                    id="edit-firearm-type"
                     value={formData.firearm_type}
                     onChange={(e) =>
                       setFormData({ firearm_type: e.target.value })
@@ -664,10 +678,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-firearm-model" className="block text-sm font-medium text-slate-700 mb-1">
                     Firearm Model
                   </label>
                   <select
+                    id="edit-firearm-model"
                     value={formData.firearm_model}
                     onChange={(e) =>
                       setFormData({ firearm_model: e.target.value })
@@ -684,10 +699,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-ammunition" className="block text-sm font-medium text-slate-700 mb-1">
                     Ammunition
                   </label>
                   <select
+                    id="edit-ammunition"
                     value={formData.ammunition}
                     onChange={(e) =>
                       setFormData({ ammunition: e.target.value })
@@ -704,10 +720,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-conditions" className="block text-sm font-medium text-slate-700 mb-1">
                     Conditions
                   </label>
                   <input
+                    id="edit-conditions"
                     type="text"
                     value={formData.conditions}
                     onChange={(e) =>
@@ -718,10 +735,11 @@ export function ViewRecordScreen() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">
+                  <label htmlFor="edit-weather" className="block text-sm font-medium text-slate-700 mb-1">
                     Weather
                   </label>
                   <input
+                    id="edit-weather"
                     type="text"
                     value={formData.weather}
                     onChange={(e) =>
@@ -775,10 +793,11 @@ export function ViewRecordScreen() {
                   ))}
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-2">
+                    <label htmlFor="edit-additional-notes" className="block text-sm font-medium text-slate-700 mb-2">
                       Additional Notes
                     </label>
                     <textarea
+                      id="edit-additional-notes"
                       value={formData.additional_notes}
                       onChange={(e) =>
                         setFormData({ additional_notes: e.target.value })

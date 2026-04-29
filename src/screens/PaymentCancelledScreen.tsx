@@ -110,6 +110,7 @@ export function PaymentCancelledScreen() {
         <div className="space-y-3">
           {storedPlan && (
             <button
+              type="button"
               onClick={handleRetry}
               disabled={retrying}
               className="w-full text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-60 bg-primary-900 hover:bg-primary-800"
@@ -120,6 +121,7 @@ export function PaymentCancelledScreen() {
           )}
 
           <button
+            type="button"
             onClick={() => setShowReportModal(true)}
             className="w-full font-semibold py-3 rounded-lg border-2 transition-colors"
             style={{ borderColor: '#093057', color: '#093057' }}
@@ -130,6 +132,7 @@ export function PaymentCancelledScreen() {
           </button>
 
           <button
+            type="button"
             onClick={handleGoToApp}
             className="w-full text-slate-500 font-medium py-2 rounded-lg hover:bg-slate-100 transition-colors text-sm"
           >
@@ -158,6 +161,8 @@ export function PaymentCancelledScreen() {
                 <div className="flex items-center justify-between mb-6">
                   <h3 className="text-xl font-bold text-slate-900">Report Connection Issue</h3>
                   <button
+                    type="button"
+                    aria-label="Close"
                     onClick={() => setShowReportModal(false)}
                     className="text-slate-400 hover:text-slate-600 transition-colors"
                   >
@@ -167,8 +172,9 @@ export function PaymentCancelledScreen() {
                 <form onSubmit={handleReportSubmit} className="space-y-4">
                   {storedName && (
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                      <label htmlFor="cancelled-report-name" className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                       <input
+                        id="cancelled-report-name"
                         type="text"
                         value={storedName}
                         readOnly
@@ -178,8 +184,9 @@ export function PaymentCancelledScreen() {
                   )}
                   {storedEmail && (
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                      <label htmlFor="cancelled-report-email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
                       <input
+                        id="cancelled-report-email"
                         type="email"
                         value={storedEmail}
                         readOnly
@@ -188,10 +195,11 @@ export function PaymentCancelledScreen() {
                     </div>
                   )}
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">
+                    <label htmlFor="cancelled-report-description" className="block text-sm font-medium text-slate-700 mb-1">
                       Brief Description <span className="text-slate-400">(optional)</span>
                     </label>
                     <textarea
+                      id="cancelled-report-description"
                       value={reportDescription}
                       onChange={e => setReportDescription(e.target.value)}
                       rows={3}

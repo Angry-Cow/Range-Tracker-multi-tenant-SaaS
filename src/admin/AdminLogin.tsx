@@ -63,8 +63,9 @@ export function AdminLogin({ onSuccess }: Props) {
           {!showForgot ? (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Username</label>
+                <label htmlFor="admin-username" className="block text-sm font-medium text-slate-700 mb-1">Username</label>
                 <input
+                  id="admin-username"
                   type="text"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
@@ -74,8 +75,9 @@ export function AdminLogin({ onSuccess }: Props) {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Password</label>
+                <label htmlFor="admin-password" className="block text-sm font-medium text-slate-700 mb-1">Password</label>
                 <input
+                  id="admin-password"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -97,6 +99,7 @@ export function AdminLogin({ onSuccess }: Props) {
               <div className="text-center">
                 <button
                   type="button"
+                  aria-label="Forgot password"
                   onClick={() => { setShowForgot(true); setError(''); }}
                   className="text-sm text-slate-500 hover:text-slate-700 transition-colors"
                 >
@@ -123,8 +126,9 @@ export function AdminLogin({ onSuccess }: Props) {
                 <form onSubmit={handleForgot} className="space-y-4">
                   <div>
                     <p className="text-sm text-slate-600 mb-4">Enter the email address associated with the admin account and we'll send a reset link.</p>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
+                    <label htmlFor="admin-forgot-email" className="block text-sm font-medium text-slate-700 mb-1">Email Address</label>
                     <input
+                      id="admin-forgot-email"
                       type="email"
                       value={forgotEmail}
                       onChange={(e) => setForgotEmail(e.target.value)}

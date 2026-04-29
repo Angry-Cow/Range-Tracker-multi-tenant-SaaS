@@ -99,7 +99,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
           <h2 className="text-lg font-semibold text-slate-900">
             {isModify ? 'Modify Plan' : 'Upgrade Your Plan'}
           </h2>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
+          <button type="button" aria-label="Close" onClick={onClose} className="text-slate-400 hover:text-slate-600 transition-colors">
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -111,8 +111,9 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                 To change your plan, please confirm your account password.
               </p>
               <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Account Password</label>
+                <label htmlFor="upgrade-modal-password" className="block text-sm font-medium text-slate-700 mb-1">Account Password</label>
                 <input
+                  id="upgrade-modal-password"
                   type="password"
                   value={password}
                   onChange={e => { setPassword(e.target.value); setPasswordError(''); }}
@@ -127,6 +128,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                 )}
               </div>
               <button
+                type="button"
                 onClick={handleVerifyPassword}
                 disabled={verifying}
                 className="w-full text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-60 bg-primary-900 hover:bg-primary-800"
@@ -199,6 +201,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
               </div>
               <div className="flex gap-3">
                 <button
+                  type="button"
                   onClick={() => setStep('select-plan')}
                   disabled={submitting}
                   className="flex-1 border border-slate-300 text-slate-700 font-semibold py-3 rounded-lg hover:bg-slate-50 transition-colors"
@@ -206,6 +209,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                   Go Back
                 </button>
                 <button
+                  type="button"
                   onClick={() => handleConfirmChange()}
                   disabled={submitting}
                   className="flex-1 text-white font-semibold py-3 rounded-lg transition-colors disabled:opacity-60"
@@ -232,6 +236,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                 }
               </p>
               <button
+                type="button"
                 onClick={onClose}
                 className="w-full text-white font-semibold py-3 rounded-lg transition-colors bg-primary-900 hover:bg-primary-800"
               >

@@ -235,6 +235,7 @@ export function AdminDashboard({ onLogout }: Props) {
           </div>
           <div className="flex items-center gap-3">
             <button
+              type="button"
               onClick={openChangePassword}
               className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm"
             >
@@ -243,6 +244,8 @@ export function AdminDashboard({ onLogout }: Props) {
             </button>
             <span className="text-white/30">|</span>
             <button
+              type="button"
+              aria-label="Sign out"
               onClick={handleLogout}
               className="flex items-center gap-2 text-white/80 hover:text-white transition-colors text-sm"
             >
@@ -270,6 +273,8 @@ export function AdminDashboard({ onLogout }: Props) {
             </div>
           </div>
           <button
+            type="button"
+            aria-label="Refresh"
             onClick={loadData}
             disabled={loading}
             className="p-3 bg-white rounded-xl shadow-sm border border-slate-200 hover:bg-slate-50 transition-colors disabled:opacity-50"
@@ -287,6 +292,7 @@ export function AdminDashboard({ onLogout }: Props) {
         <div className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden">
           <div className="flex border-b border-slate-200">
             <button
+              type="button"
               onClick={() => setTab('tenants')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors border-b-2 ${
                 tab === 'tenants'
@@ -299,6 +305,7 @@ export function AdminDashboard({ onLogout }: Props) {
               Active Tenants
             </button>
             <button
+              type="button"
               onClick={() => setTab('registrations')}
               className={`flex items-center gap-2 px-6 py-4 text-sm font-medium transition-colors border-b-2 relative ${
                 tab === 'registrations'
@@ -342,8 +349,9 @@ export function AdminDashboard({ onLogout }: Props) {
                       </div>
                       {plans.length > 0 && (
                         <div className="flex items-center gap-2 mt-2">
-                          <span className="text-xs text-slate-500 font-medium">Plan:</span>
+                          <label htmlFor={`plan-select-${tenant.id}`} className="text-xs text-slate-500 font-medium">Plan:</label>
                           <select
+                            id={`plan-select-${tenant.id}`}
                             value={planSelections[tenant.id] || tenant.plan_type || 'Free'}
                             onChange={(e) => setPlanSelections(prev => ({ ...prev, [tenant.id]: e.target.value }))}
                             disabled={planSaving === tenant.id}
@@ -354,6 +362,8 @@ export function AdminDashboard({ onLogout }: Props) {
                             ))}
                           </select>
                           <button
+                            type="button"
+                            aria-label={`Set plan for ${tenant.name}`}
                             onClick={() => handleSetPlan(tenant)}
                             disabled={planSaving === tenant.id || planSelections[tenant.id] === tenant.plan_type}
                             className="text-xs px-3 py-1 rounded font-medium text-white transition-colors disabled:opacity-40 bg-primary-900 hover:bg-primary-800"
@@ -366,6 +376,8 @@ export function AdminDashboard({ onLogout }: Props) {
                     <div className="flex items-center gap-2">
                       {tenant.status === 'active' && (
                         <button
+                          type="button"
+                          aria-label={`Resend approval email to ${tenant.email}`}
                           onClick={() => handleResendEmail(tenant)}
                           disabled={actionId === tenant.id}
                           title="Resend approval email"
@@ -376,6 +388,8 @@ export function AdminDashboard({ onLogout }: Props) {
                       )}
                       {tenant.status === 'active' && (
                         <button
+                          type="button"
+                          aria-label={`Suspend ${tenant.name}`}
                           onClick={() => handleSuspend(tenant)}
                           disabled={actionId === tenant.id}
                           title="Suspend"
@@ -386,6 +400,8 @@ export function AdminDashboard({ onLogout }: Props) {
                       )}
                       {tenant.status === 'suspended' && (
                         <button
+                          type="button"
+                          aria-label={`Reactivate ${tenant.name}`}
                           onClick={() => handleApprove(tenant)}
                           disabled={actionId === tenant.id}
                           title="Reactivate"
@@ -395,6 +411,8 @@ export function AdminDashboard({ onLogout }: Props) {
                         </button>
                       )}
                       <button
+                        type="button"
+                        aria-label={`Delete ${tenant.name} permanently`}
                         onClick={() => setConfirmDelete(tenant)}
                         disabled={actionId === tenant.id}
                         title="Delete permanently"
@@ -426,6 +444,7 @@ export function AdminDashboard({ onLogout }: Props) {
                     </div>
                     <div className="flex items-center gap-2">
                       <button
+                        type="button"
                         onClick={() => handleApprove(tenant)}
                         disabled={actionId === tenant.id}
                         className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-white rounded-lg transition-colors disabled:opacity-50 bg-primary-900 hover:bg-primary-800"
@@ -434,6 +453,7 @@ export function AdminDashboard({ onLogout }: Props) {
                         Approve
                       </button>
                       <button
+                        type="button"
                         onClick={() => handleReject(tenant)}
                         disabled={actionId === tenant.id}
                         className="flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-red-600 border border-red-200 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
@@ -469,8 +489,9 @@ export function AdminDashboard({ onLogout }: Props) {
                 )}
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Current Password</label>
+                    <label htmlFor="admin-change-pw-current" className="block text-sm font-medium text-slate-700 mb-1">Current Password</label>
                     <input
+                      id="admin-change-pw-current"
                       type="password"
                       value={pwCurrent}
                       onChange={(e) => setPwCurrent(e.target.value)}
@@ -479,8 +500,9 @@ export function AdminDashboard({ onLogout }: Props) {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
+                    <label htmlFor="admin-change-pw-new" className="block text-sm font-medium text-slate-700 mb-1">New Password</label>
                     <input
+                      id="admin-change-pw-new"
                       type="password"
                       value={pwNew}
                       onChange={(e) => setPwNew(e.target.value)}
@@ -489,8 +511,9 @@ export function AdminDashboard({ onLogout }: Props) {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Confirm New Password</label>
+                    <label htmlFor="admin-change-pw-confirm" className="block text-sm font-medium text-slate-700 mb-1">Confirm New Password</label>
                     <input
+                      id="admin-change-pw-confirm"
                       type="password"
                       value={pwConfirm}
                       onChange={(e) => setPwConfirm(e.target.value)}
@@ -502,6 +525,7 @@ export function AdminDashboard({ onLogout }: Props) {
                 </div>
                 <div className="flex gap-3 mt-6">
                   <button
+                    type="button"
                     onClick={handleChangePassword}
                     disabled={pwSaving}
                     className="flex-1 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50"
@@ -510,6 +534,7 @@ export function AdminDashboard({ onLogout }: Props) {
                     {pwSaving ? 'Saving...' : 'Update Password'}
                   </button>
                   <button
+                    type="button"
                     onClick={() => setShowChangePassword(false)}
                     disabled={pwSaving}
                     className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold transition-colors"
@@ -533,12 +558,14 @@ export function AdminDashboard({ onLogout }: Props) {
             <p className="text-red-600 text-sm font-medium mb-6">Tenant: /t/{confirmDelete.slug}/</p>
             <div className="flex gap-3">
               <button
+                type="button"
                 onClick={() => handleDelete(confirmDelete)}
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
               >
                 Delete Permanently
               </button>
               <button
+                type="button"
                 onClick={() => setConfirmDelete(null)}
                 className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold transition-colors"
               >

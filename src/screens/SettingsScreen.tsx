@@ -229,6 +229,8 @@ export function SettingsScreen() {
       <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <button
+            type="button"
+            aria-label="Back to Home"
             onClick={() => setCurrentScreen('home')}
             className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
           >
@@ -247,6 +249,7 @@ export function SettingsScreen() {
               </div>
             </div>
             <button
+              type="button"
               onClick={() => setCurrentScreen('shooter-profile')}
               className="text-white px-4 py-2 rounded-lg font-semibold transition-colors bg-primary-900 hover:bg-primary-800"
             >
@@ -299,6 +302,8 @@ export function SettingsScreen() {
                           <GripVertical className="w-4 h-4 text-slate-400 cursor-grab active:cursor-grabbing flex-shrink-0" />
                           <span className="flex-1 text-slate-700">{setting.value}</span>
                           <button
+                            type="button"
+                            aria-label={`Delete ${setting.value}`}
                             onClick={() => handleDeleteValue(setting.id)}
                             className="text-red-400 hover:text-red-600 transition-colors flex-shrink-0"
                           >
@@ -312,7 +317,11 @@ export function SettingsScreen() {
                     </div>
 
                     <div className="flex gap-2">
+                      <label htmlFor={`settings-add-${key}`} className="sr-only">
+                        Add new {label.toLowerCase()}
+                      </label>
                       <input
+                        id={`settings-add-${key}`}
                         type="text"
                         value={newValues[key]}
                         onChange={(e) =>
@@ -329,6 +338,8 @@ export function SettingsScreen() {
                         }}
                       />
                       <button
+                        type="button"
+                        aria-label={`Add ${label.toLowerCase()}`}
                         onClick={() => handleAddValue(key)}
                         disabled={atCategoryLimit}
                         className="text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-1 disabled:cursor-not-allowed bg-primary-900 hover:bg-primary-800 disabled:bg-slate-400"

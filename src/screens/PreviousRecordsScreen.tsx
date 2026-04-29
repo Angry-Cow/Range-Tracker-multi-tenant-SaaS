@@ -245,6 +245,8 @@ export function PreviousRecordsScreen() {
       <div className="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <button
+            type="button"
+            aria-label="Back to Home"
             onClick={() => setCurrentScreen('home')}
             className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
           >
@@ -270,6 +272,7 @@ export function PreviousRecordsScreen() {
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-slate-900">Filter Records</h3>
                   <button
+                    type="button"
                     onClick={handleClearFilters}
                     className="text-sm font-medium"
                     style={{ color: '#093057' }}
@@ -283,10 +286,11 @@ export function PreviousRecordsScreen() {
                 {filters.map((filter, index) => (
                   <div key={index} className="grid grid-cols-1 md:grid-cols-2 gap-3">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">
-                        Filter {index + 2} - Type
+                      <label htmlFor={`filter-type-${index}`} className="block text-sm font-medium text-slate-700 mb-1">
+                        Filter {index + 1} - Type
                       </label>
                       <select
+                        id={`filter-type-${index}`}
                         value={filter.type}
                         onChange={(e) =>
                           handleFilterTypeChange(index, e.target.value as SortOption)
@@ -307,12 +311,14 @@ export function PreviousRecordsScreen() {
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">
-                        Filter {index + 2} - Value
+                      <label htmlFor={`filter-value-${index}`} className="block text-sm font-medium text-slate-700 mb-1">
+                        Filter {index + 1} - Value
                       </label>
                       {filter.type === 'date_range' ? (
                         <div className="flex gap-2">
+                          <label htmlFor={`filter-date-start-${index}`} className="sr-only">Start date</label>
                           <input
+                            id={`filter-date-start-${index}`}
                             type="date"
                             value={dateRange.start}
                             onChange={(e) =>
@@ -320,7 +326,9 @@ export function PreviousRecordsScreen() {
                             }
                             className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
                           />
+                          <label htmlFor={`filter-date-end-${index}`} className="sr-only">End date</label>
                           <input
+                            id={`filter-date-end-${index}`}
                             type="date"
                             value={dateRange.end}
                             onChange={(e) =>
@@ -331,6 +339,7 @@ export function PreviousRecordsScreen() {
                         </div>
                       ) : (
                         <select
+                          id={`filter-value-${index}`}
                           value={filter.value}
                           onChange={(e) =>
                             handleFilterValueChange(index, e.target.value)
@@ -362,6 +371,7 @@ export function PreviousRecordsScreen() {
                 {filteredRecords.length > 0 && (
                   <div className="flex flex-wrap items-center gap-2">
                     <button
+                      type="button"
                       onClick={handleExportCSV}
                       disabled={exportingCsv || exportingZip}
                       className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-white transition-colors disabled:opacity-60 disabled:cursor-not-allowed bg-primary-900 hover:bg-primary-800"
@@ -375,6 +385,7 @@ export function PreviousRecordsScreen() {
                     </button>
 
                     <button
+                      type="button"
                       onClick={handleExportPhotos}
                       disabled={exportingCsv || exportingZip || !hasPhotos}
                       className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed border"
@@ -459,6 +470,8 @@ export function PreviousRecordsScreen() {
                           </div>
                         </div>
                         <button
+                          type="button"
+                          aria-label={`View record from ${record.record_date}`}
                           onClick={() => handleViewRecord(record.id)}
                           className="ml-4 text-white px-4 py-2 rounded-lg transition-colors flex items-center gap-2 bg-primary-900 hover:bg-primary-800"
                         >
@@ -478,6 +491,8 @@ export function PreviousRecordsScreen() {
                   </span>
                   <div className="flex items-center gap-2">
                     <button
+                      type="button"
+                      aria-label="Previous page"
                       onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
                       disabled={currentPage === 1}
                       className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
@@ -486,6 +501,8 @@ export function PreviousRecordsScreen() {
                       Previous
                     </button>
                     <button
+                      type="button"
+                      aria-label="Next page"
                       onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
                       disabled={currentPage === totalPages}
                       className="flex items-center gap-1 px-3 py-2 rounded-lg text-sm font-medium border border-slate-300 text-slate-700 hover:bg-slate-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"

@@ -91,6 +91,8 @@ export function ShooterProfileScreen() {
       <div className="max-w-2xl mx-auto p-4 sm:p-6 lg:p-8">
         <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8">
           <button
+            type="button"
+            aria-label="Back to Settings"
             onClick={handleCancel}
             className="flex items-center gap-2 text-slate-600 hover:text-slate-900 mb-6 transition-colors"
           >
@@ -105,10 +107,11 @@ export function ShooterProfileScreen() {
 
           <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="profile-first-name" className="block text-sm font-medium text-slate-700 mb-2">
                 First Name *
               </label>
               <input
+                id="profile-first-name"
                 type="text"
                 value={firstName}
                 onChange={(e) => setFirstName(e.target.value)}
@@ -118,10 +121,11 @@ export function ShooterProfileScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="profile-last-name" className="block text-sm font-medium text-slate-700 mb-2">
                 Last Name *
               </label>
               <input
+                id="profile-last-name"
                 type="text"
                 value={lastName}
                 onChange={(e) => setLastName(e.target.value)}
@@ -131,10 +135,11 @@ export function ShooterProfileScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="profile-email" className="block text-sm font-medium text-slate-700 mb-2">
                 Email
               </label>
               <input
+                id="profile-email"
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -143,10 +148,11 @@ export function ShooterProfileScreen() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
+              <label htmlFor="profile-phone" className="block text-sm font-medium text-slate-700 mb-2">
                 Phone
               </label>
               <input
+                id="profile-phone"
                 type="tel"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -156,6 +162,7 @@ export function ShooterProfileScreen() {
 
             <div className="flex gap-3 pt-4">
               <button
+                type="button"
                 onClick={handleSave}
                 disabled={loading}
                 className="flex-1 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed bg-primary-900 hover:bg-primary-800 disabled:bg-slate-500"
@@ -163,6 +170,7 @@ export function ShooterProfileScreen() {
                 {loading ? 'Saving...' : 'Save Changes'}
               </button>
               <button
+                type="button"
                 onClick={handleCancel}
                 disabled={loading}
                 className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -173,6 +181,7 @@ export function ShooterProfileScreen() {
 
             <div className="border-t border-slate-200 pt-8 mt-8">
               <button
+                type="button"
                 onClick={() => setShowDeleteConfirm(true)}
                 disabled={loading}
                 className="w-full text-red-600 font-semibold py-2 hover:text-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -206,6 +215,7 @@ export function ShooterProfileScreen() {
 
             <div className="flex gap-3">
               <button
+                type="button"
                 onClick={handleDelete}
                 disabled={loading}
                 className="flex-1 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
@@ -213,6 +223,7 @@ export function ShooterProfileScreen() {
                 {loading ? 'Deleting...' : 'Delete Account'}
               </button>
               <button
+                type="button"
                 onClick={() => setShowDeleteConfirm(false)}
                 disabled={loading}
                 className="flex-1 bg-slate-200 hover:bg-slate-300 text-slate-700 px-6 py-3 rounded-lg font-semibold transition-colors disabled:opacity-50 disabled:cursor-not-allowed"

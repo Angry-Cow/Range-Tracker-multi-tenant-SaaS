@@ -331,6 +331,8 @@ export function RegisterPage() {
                   <div className="flex items-center justify-between mb-6">
                     <h3 className="text-xl font-bold text-slate-900">Report Issue</h3>
                     <button
+                      type="button"
+                      aria-label="Close"
                       onClick={resetToForm}
                       className="text-slate-400 hover:text-slate-600 transition-colors"
                     >
@@ -339,8 +341,9 @@ export function RegisterPage() {
                   </div>
                   <form onSubmit={handleReportSubmit} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Name</label>
+                      <label htmlFor="report-name" className="block text-sm font-medium text-slate-700 mb-1">Name</label>
                       <input
+                        id="report-name"
                         type="text"
                         value={name}
                         readOnly
@@ -348,8 +351,9 @@ export function RegisterPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">Email</label>
+                      <label htmlFor="report-email" className="block text-sm font-medium text-slate-700 mb-1">Email</label>
                       <input
+                        id="report-email"
                         type="email"
                         value={email}
                         readOnly
@@ -357,10 +361,11 @@ export function RegisterPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-slate-700 mb-1">
+                      <label htmlFor="report-description" className="block text-sm font-medium text-slate-700 mb-1">
                         Brief Description <span className="text-slate-400">(optional)</span>
                       </label>
                       <textarea
+                        id="report-description"
                         value={reportDescription}
                         onChange={(e) => setReportDescription(e.target.value)}
                         rows={3}
@@ -458,10 +463,11 @@ export function RegisterPage() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-name" className="block text-sm font-medium text-slate-700 mb-1">
               Full Name *
             </label>
             <input
+              id="register-name"
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -473,10 +479,11 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-email" className="block text-sm font-medium text-slate-700 mb-1">
               Email Address *
             </label>
             <input
+              id="register-email"
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -487,10 +494,11 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-plan" className="block text-sm font-medium text-slate-700 mb-1">
               Plan *
             </label>
             <select
+              id="register-plan"
               value={selectedPlan}
               onChange={handlePlanChange}
               required
@@ -510,10 +518,11 @@ export function RegisterPage() {
 
           {requiresInvitationCode && (
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-1">
+              <label htmlFor="register-invitation-code" className="block text-sm font-medium text-slate-700 mb-1">
                 Invitation Code *
               </label>
               <input
+                id="register-invitation-code"
                 type="text"
                 value={invitationCode}
                 onChange={(e) => { setInvitationCode(e.target.value); setError(''); }}
@@ -525,10 +534,11 @@ export function RegisterPage() {
           )}
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-organization" className="block text-sm font-medium text-slate-700 mb-1">
               Organization / Club
             </label>
             <input
+              id="register-organization"
               type="text"
               value={organization}
               onChange={(e) => setOrganization(e.target.value)}
@@ -538,10 +548,11 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-site-name" className="block text-sm font-medium text-slate-700 mb-1">
               Site Name *
             </label>
             <input
+              id="register-site-name"
               type="text"
               value={siteName}
               onChange={(e) => {
@@ -565,11 +576,12 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-password" className="block text-sm font-medium text-slate-700 mb-1">
               Password *
             </label>
             <div className="relative">
               <input
+                id="register-password"
                 type={showPassword ? 'text' : 'password'}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -579,6 +591,7 @@ export function RegisterPage() {
               />
               <button
                 type="button"
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
                 onClick={() => setShowPassword(!showPassword)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               >
@@ -609,11 +622,12 @@ export function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-slate-700 mb-1">
+            <label htmlFor="register-confirm-password" className="block text-sm font-medium text-slate-700 mb-1">
               Confirm Password *
             </label>
             <div className="relative">
               <input
+                id="register-confirm-password"
                 type={showConfirm ? 'text' : 'password'}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -627,6 +641,7 @@ export function RegisterPage() {
               />
               <button
                 type="button"
+                aria-label={showConfirm ? 'Hide confirm password' : 'Show confirm password'}
                 onClick={() => setShowConfirm(!showConfirm)}
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
               >

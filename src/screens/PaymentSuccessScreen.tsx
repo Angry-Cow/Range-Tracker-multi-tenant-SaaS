@@ -103,6 +103,7 @@ export function PaymentSuccessScreen() {
             </div>
 
             <button
+              type="button"
               onClick={handleGoToApp}
               className="w-full text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 bg-primary-900 hover:bg-primary-800"
             >
