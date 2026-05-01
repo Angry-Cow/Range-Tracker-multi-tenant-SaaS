@@ -149,6 +149,8 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                   return (
                     <button
                       key={plan}
+                      type="button"
+                      aria-label={`Select ${plan} plan`}
                       onClick={() => handleSelectPlan(plan)}
                       disabled={submitting}
                       className="w-full text-left border-2 border-slate-200 hover:border-slate-400 rounded-xl p-4 transition-all disabled:opacity-60 hover:bg-[#f0f4f8]"

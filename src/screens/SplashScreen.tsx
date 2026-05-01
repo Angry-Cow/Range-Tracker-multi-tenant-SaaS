@@ -32,6 +32,7 @@ export function SplashScreen() {
         <p className="text-white/90 text-lg mb-12">Ver. 00.02.35</p>
 
         <button
+          type="button"
           onClick={handleGetStarted}
           className="px-12 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200 text-white"
           style={{ backgroundColor: '#093057', border: '2px solid white' }}
