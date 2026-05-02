@@ -421,7 +421,7 @@ export function PreviousRecordsScreen() {
               </div>
 
               {exportError && (
-                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">
+                <div className="mb-4 p-3 bg-white border border-red-500 rounded-lg text-sm text-red-700">
                   {exportError}
                 </div>
               )}

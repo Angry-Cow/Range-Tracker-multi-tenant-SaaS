@@ -374,7 +374,7 @@ export function RegisterPage() {
                       />
                     </div>
                     {reportError && (
-                      <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                      <div className="rounded-lg border border-red-500 bg-white p-3 text-sm text-red-700">
                         {reportError}
                       </div>
                     )}
@@ -654,7 +654,7 @@ export function RegisterPage() {
           </div>
 
           {error && (
-            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
+            <div className="p-3 bg-white border border-red-500 rounded-lg">
               <div className="flex items-start justify-between gap-3">
                 <p className="text-sm text-red-700">{error}</p>
                 <button

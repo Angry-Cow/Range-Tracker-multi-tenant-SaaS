@@ -87,7 +87,7 @@ export function ResetPasswordPage({ token, onDone }: Props) {
                 />
               </div>
               {error && (
-                <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700">{error}</div>
+                <div className="p-3 bg-white border border-red-500 rounded-lg text-sm text-red-700">{error}</div>
               )}
               <button
                 type="submit"

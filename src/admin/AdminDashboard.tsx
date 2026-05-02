@@ -284,7 +284,7 @@ export function AdminDashboard({ onLogout }: Props) {
         </div>
 
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm">
+          <div className="mb-6 p-4 bg-white border border-red-500 rounded-xl text-red-700 text-sm">
             {error}
           </div>
         )}
@@ -483,7 +483,7 @@ export function AdminDashboard({ onLogout }: Props) {
             ) : (
               <>
                 {pwError && (
-                  <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg text-red-700 text-sm">
+                  <div className="mb-4 p-3 bg-white border border-red-500 rounded-lg text-red-700 text-sm">
                     {pwError}
                   </div>
                 )}

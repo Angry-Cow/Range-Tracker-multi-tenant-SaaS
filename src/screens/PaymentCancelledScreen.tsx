@@ -141,7 +141,7 @@ export function PaymentCancelledScreen() {
         </div>
 
         {retryError && (
-          <p className="mt-4 text-sm text-red-600">{retryError}</p>
+          <p className="mt-4 text-sm text-red-700">{retryError}</p>
         )}
       </div>
 
@@ -208,7 +208,7 @@ export function PaymentCancelledScreen() {
                     />
                   </div>
                   {reportError && (
-                    <div className="rounded-lg border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+                    <div className="rounded-lg border border-red-500 bg-white p-3 text-sm text-red-700">
                       {reportError}
                     </div>
                   )}

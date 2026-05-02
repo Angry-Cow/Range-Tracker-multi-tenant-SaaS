@@ -90,7 +90,7 @@ export function NewShooterScreen() {
           </div>
 
           {atShooterLimit && (
-            <div className="mb-6 px-4 py-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-800">
+            <div className="mb-6 px-4 py-3 bg-white border border-red-500 rounded-lg text-sm text-red-700">
               Shooter limit reached. Your Free plan allows up to {planInfo!.shooter_limit} shooters. Please upgrade your plan to add more shooters.
             </div>
           )}

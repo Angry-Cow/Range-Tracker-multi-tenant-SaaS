@@ -124,7 +124,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                   autoFocus
                 />
                 {passwordError && (
-                  <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+                  <p className="mt-1 text-sm text-red-700">{passwordError}</p>
                 )}
               </div>
               <button
@@ -165,7 +165,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                   );
                 })}
               </div>
-              {submitError && <p className="text-sm text-red-600">{submitError}</p>}
+              {submitError && <p className="text-sm text-red-700">{submitError}</p>}
             </div>
           )}
 
@@ -222,7 +222,7 @@ export function UpgradePlanModal({ currentPlan, onClose }: UpgradePlanModalProps
                   {submitting ? 'Processing...' : 'Confirm Downgrade'}
                 </button>
               </div>
-              {submitError && <p className="text-sm text-red-600">{submitError}</p>}
+              {submitError && <p className="text-sm text-red-700">{submitError}</p>}
             </div>
           )}
 
