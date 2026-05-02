@@ -27,19 +27,19 @@ This was documented on 2026-04-20 after the policy was previously removed during
 
 When removing a tenant and all associated records, the rows in `founder_tokens_used` and `promotional_tokens_used` that reference that tenant must **NOT be deleted**. These tokens must remain in the database so they can be reused.
 
-Instead, only clear the tenant-specific fields on the matching row:
+Instead, clear the tenant-specific fields on the matching row so the token is fully released for reuse:
 
 ```sql
 UPDATE founder_tokens_used
-SET redeemed_by_tenant_id = NULL, redeemed_at = NULL
+SET redeemed_by_tenant_id = NULL, redeemed_at = NULL, token_value = NULL
 WHERE redeemed_by_tenant_id = '<tenant_id>';
 
 UPDATE promotional_tokens_used
-SET redeemed_by_tenant_id = NULL, redeemed_at = NULL
+SET redeemed_by_tenant_id = NULL, redeemed_at = NULL, token_value = NULL
 WHERE redeemed_by_tenant_id = '<tenant_id>';
 ```
 
-The `code` and `token_value` columns must remain intact. Only `redeemed_by_tenant_id` and `redeemed_at` should be cleared.
+The `code` column must remain intact. `redeemed_by_tenant_id`, `redeemed_at`, and `token_value` must all be set to NULL.
 
 ---
 

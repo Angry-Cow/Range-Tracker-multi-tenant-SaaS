@@ -330,9 +330,22 @@ async function handleRejectTenant(tenantId: string, supabase: SupabaseClient, ad
 }
 
 async function handleDeleteTenant(tenantId: string, supabase: SupabaseClient, adminUsername: string): Promise<Response> {
+  const { data: tenant } = await supabase.from("tenants").select("plan_type").eq("id", tenantId).maybeSingle();
+
   await supabase.from("tenant_setting_values").delete().eq("tenant_id", tenantId);
   await supabase.from("tenant_range_records").delete().eq("tenant_id", tenantId);
   await supabase.from("tenant_shooters").delete().eq("tenant_id", tenantId);
+
+  if (tenant?.plan_type === "Promotional") {
+    await supabase.from("promotional_tokens_used")
+      .update({ redeemed_by_tenant_id: null, redeemed_at: null, token_value: null })
+      .eq("redeemed_by_tenant_id", tenantId);
+  } else if (tenant?.plan_type === "Founder") {
+    await supabase.from("founder_tokens_used")
+      .update({ redeemed_by_tenant_id: null, redeemed_at: null, token_value: null })
+      .eq("redeemed_by_tenant_id", tenantId);
+  }
+
   const { error } = await supabase.from("tenants").delete().eq("id", tenantId);
   if (error) return json({ data: null, error: error.message }, 500);
   await audit(supabase, "delete", adminUsername, tenantId);
