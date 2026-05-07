@@ -19,7 +19,7 @@ export function SplashScreen() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#1a3a5c' }}>
+    <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#153050' }}>
       <div className="text-center">
         <div className="mb-8 flex justify-center">
           <img src="/Range_Tracker_Approved_Logo_for_Dark_BG.png" alt="Range Tracker Logo" className="w-72 h-72 object-contain" />
@@ -31,7 +31,7 @@ export function SplashScreen() {
           type="button"
           onClick={handleGetStarted}
           className="px-12 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200 text-white"
-          style={{ backgroundColor: '#1a3a5c', border: '2px solid white' }}
+          style={{ backgroundColor: '#153050', border: '2px solid white' }}
         >
           Get Started
         </button>
