@@ -22,12 +22,8 @@ export function SplashScreen() {
     <div className="min-h-screen flex items-center justify-center p-4" style={{ backgroundColor: '#093057' }}>
       <div className="text-center">
         <div className="mb-8 flex justify-center">
-          <div className="w-32 h-32 bg-white rounded-3xl flex items-center justify-center shadow-2xl p-4">
-            <img src="/SASS_Favicon_Cropped_Smaller.png" alt="Range Tracker Logo" className="w-full h-full object-contain" />
-          </div>
+          <img src="/Range_Tracker_Approved_Logo_for_Dark_BG.png" alt="Range Tracker Logo" className="w-72 h-72 object-contain" />
         </div>
-
-        <h1 className="text-6xl font-bold text-white mb-4">Range Tracker</h1>
 
         <p className="text-white/90 text-lg mb-12">Ver. 00.02.35</p>
 
