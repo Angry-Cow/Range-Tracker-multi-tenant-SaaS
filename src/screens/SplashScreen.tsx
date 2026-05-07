@@ -25,8 +25,12 @@ export function SplashScreen() {
           <img src="/Range_Tracker_Approved_Logo_for_Dark_BG.png" alt="Range Tracker Logo" className="w-72 h-72 object-contain" />
         </div>
 
-        <h1 className="text-white text-3xl font-bold mb-3">Welcome to Range Tracker&#8482;</h1>
-        <p className="text-white/80 text-base mb-8">Click the button below to create an account or log in</p>
+        <h1 className="text-white text-3xl font-bold mb-3 leading-snug">
+          Welcome to<br />Range Tracker&#8482;
+        </h1>
+        <p className="text-white/80 text-base mb-8 leading-relaxed">
+          Click the button below<br />to create an account or log in
+        </p>
 
         <p className="text-white/90 text-lg mb-12">Ver. 00.02.35</p>
 
