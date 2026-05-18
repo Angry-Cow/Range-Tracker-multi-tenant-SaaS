@@ -413,10 +413,10 @@ export function RegisterPage() {
           </div>
           <h2 className="text-2xl font-bold text-slate-900 mb-2">Access Granted</h2>
           <p className="text-slate-600 mb-6">
-            Your Range Tracker account is ready. Your instance is at:
+            Your Range Tracker account is ready. You can access it at:
           </p>
-          <div className="bg-slate-100 rounded-lg px-4 py-3 mb-6 font-mono text-sm text-slate-700 break-all">
-            /t/{approvedInfo.slug}/
+          <div className="bg-slate-100 rounded-lg px-4 py-3 mb-6 font-mono text-sm text-slate-700">
+            rangetrackerapp.com
           </div>
           <button
             onClick={goToApp}
