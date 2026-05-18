@@ -32,6 +32,15 @@ export function SplashScreen() {
           Click the button below<br />to create an account or log in
         </p>
 
+        <a
+          href="https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block px-12 py-4 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-200 mb-4 text-center"
+          style={{ backgroundColor: 'white', color: '#153050', border: '2px solid white' }}
+        >
+          Get The Users Guide
+        </a>
         <button
           type="button"
           onClick={handleGetStarted}
