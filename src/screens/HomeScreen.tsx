@@ -205,6 +205,18 @@ export function HomeScreen() {
             </button>
           </div>
 
+          <div className="flex justify-end mb-4">
+            <a
+              href="https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-sm text-white px-3 py-1.5 rounded-lg transition-colors"
+              style={{ backgroundColor: '#153050' }}
+            >
+              Get The Users Guide
+            </a>
+          </div>
+
           {showBanner && (
             <div className="mb-6 px-4 py-3 bg-amber-50 border border-amber-200 rounded-lg">
               <div className="flex items-center justify-between gap-4 flex-wrap">

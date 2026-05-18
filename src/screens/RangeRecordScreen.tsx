@@ -299,18 +299,6 @@ export function RangeRecordScreen() {
             </button>
           </div>
 
-          <div className="flex justify-end mb-4">
-            <a
-              href="https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-sm text-white px-3 py-1.5 rounded-lg transition-colors"
-              style={{ backgroundColor: '#153050' }}
-            >
-              Get The Users Guide
-            </a>
-          </div>
-
           <div className="mb-6">
             <h1 className="text-2xl font-bold text-slate-900">New Range Record</h1>
             <p className="text-slate-600">
