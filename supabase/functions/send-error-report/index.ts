@@ -2,9 +2,7 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "npm:@supabase/supabase-js@2";
 import { corsHeaders, json } from "../_shared/cors.ts";
 
-const FORMSPREE_ENDPOINT = "https://formspree.io/f/xkokzdza";
-
-async function sendViaFormspree(opts: {
+async function sendViaSmtp(opts: {
   name: string;
   email: string;
   description: string;
@@ -13,43 +11,92 @@ async function sendViaFormspree(opts: {
   source: string;
   reportId: string;
 }): Promise<{ ok: true } | { ok: false; error: string }> {
+  const smtpHost = Deno.env.get("SMTP_HOST") || "mail.rangetracker.net";
+  const smtpPort = parseInt(Deno.env.get("SMTP_PORT") || "465");
+  const smtpUser = Deno.env.get("SMTP_USER") || "accounts@rangetracker.net";
+  const smtpPass = Deno.env.get("SMTP_PASS") || "";
+  const smtpFrom = Deno.env.get("SMTP_FROM") || "accounts@rangetracker.net";
+  const to = "info@rangetracker.net";
+
+  const subject = `Support Report - ${opts.name || "Unknown"} [${opts.source || "unknown"}]`;
+
+  const plain = [
+    `Support Report ID: ${opts.reportId}`,
+    `Source: ${opts.source || "(not specified)"}`,
+    `Name: ${opts.name || "(not specified)"}`,
+    `Email: ${opts.email || "(not specified)"}`,
+    ``,
+    `User Description:`,
+    opts.description || "(no description provided)",
+    ``,
+    `Failed Step:`,
+    opts.errorStep || "(not captured)",
+    ``,
+    `Internal Error:`,
+    opts.internalError || "(none captured)",
+    ``,
+    `Timestamp: ${new Date().toISOString()}`,
+  ].join("\n");
+
+  const html = `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="font-family: Arial, sans-serif; font-size: 14px; color: #000000; line-height: 1.6; max-width: 600px; margin: 0; padding: 20px;">
+  <p style="margin: 0 0 16px 0;"><strong>Support Report</strong></p>
+  <table style="border-collapse: collapse; width: 100%; margin-bottom: 16px;">
+    <tr><td style="padding: 4px 8px 4px 0; font-weight: bold; white-space: nowrap;">Report ID:</td><td style="padding: 4px 0;">${opts.reportId}</td></tr>
+    <tr><td style="padding: 4px 8px 4px 0; font-weight: bold; white-space: nowrap;">Source:</td><td style="padding: 4px 0;">${opts.source || "(not specified)"}</td></tr>
+    <tr><td style="padding: 4px 8px 4px 0; font-weight: bold; white-space: nowrap;">Name:</td><td style="padding: 4px 0;">${opts.name || "(not specified)"}</td></tr>
+    <tr><td style="padding: 4px 8px 4px 0; font-weight: bold; white-space: nowrap;">Email:</td><td style="padding: 4px 0;">${opts.email || "(not specified)"}</td></tr>
+    <tr><td style="padding: 4px 8px 4px 0; font-weight: bold; white-space: nowrap;">Timestamp:</td><td style="padding: 4px 0;">${new Date().toISOString()}</td></tr>
+  </table>
+  <p style="margin: 0 0 4px 0;"><strong>User Description:</strong></p>
+  <p style="margin: 0 0 16px 0; white-space: pre-wrap;">${opts.description || "(no description provided)"}</p>
+  <p style="margin: 0 0 4px 0;"><strong>Failed Step:</strong></p>
+  <p style="margin: 0 0 16px 0; white-space: pre-wrap;">${opts.errorStep || "(not captured)"}</p>
+  <p style="margin: 0 0 4px 0;"><strong>Internal Error:</strong></p>
+  <p style="margin: 0; white-space: pre-wrap;">${opts.internalError || "(none captured)"}</p>
+</body>
+</html>`;
+
+  const boundary = "----=_Part_RangeTracker_" + Date.now();
+  const multipartBody = `--${boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n${plain}\r\n--${boundary}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${html}\r\n--${boundary}--`;
+
   try {
-    const message = [
-      `Support Report ID: ${opts.reportId}`,
-      `Source: ${opts.source || "(not specified)"}`,
-      ``,
-      `User Description:`,
-      opts.description || "(no description provided)",
-      ``,
-      `Failed Step:`,
-      opts.errorStep || "(not captured)",
-      ``,
-      `Internal Error:`,
-      opts.internalError || "(none captured)",
-      ``,
-      `Timestamp: ${new Date().toISOString()}`,
-    ].join("\n");
+    const conn = await Deno.connect({ hostname: smtpHost, port: smtpPort, transport: "tcp" });
+    const tlsConn = await Deno.startTls(conn, { hostname: smtpHost });
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
 
-    const res = await fetch(FORMSPREE_ENDPOINT, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-      },
-      body: JSON.stringify({
-        name: opts.name || "Unknown",
-        email: opts.email || "no-email@rangetracker.net",
-        message,
-        _subject: `Support Report - ${opts.name || "Unknown"} [${opts.source || "unknown"}]`,
-      }),
-    });
-
-    if (res.ok) {
-      return { ok: true };
+    async function readLine(c: Deno.TlsConn): Promise<string> {
+      const buf = new Uint8Array(4096);
+      let result = "";
+      while (true) {
+        const n = await c.read(buf);
+        if (n === null) break;
+        result += decoder.decode(buf.subarray(0, n));
+        if (result.includes("\r\n")) break;
+      }
+      return result;
     }
 
-    const errBody = await res.text().catch(() => `HTTP ${res.status}`);
-    return { ok: false, error: `Formspree returned ${res.status}: ${errBody}` };
+    async function send(c: Deno.TlsConn, data: string): Promise<string> {
+      await c.write(encoder.encode(data + "\r\n"));
+      return await readLine(c);
+    }
+
+    await readLine(tlsConn);
+    await send(tlsConn, `EHLO rangetracker.net`);
+    await send(tlsConn, `AUTH LOGIN`);
+    await send(tlsConn, btoa(smtpUser));
+    await send(tlsConn, btoa(smtpPass));
+    await send(tlsConn, `MAIL FROM:<${smtpFrom}>`);
+    await send(tlsConn, `RCPT TO:<${to}>`);
+    await send(tlsConn, `DATA`);
+    await send(tlsConn, `From: Range Tracker <${smtpFrom}>\r\nTo: ${to}\r\nSubject: ${subject}\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary="${boundary}"\r\n\r\n${multipartBody}\r\n.`);
+    await send(tlsConn, `QUIT`);
+    tlsConn.close();
+    return { ok: true };
   } catch (err) {
     return { ok: false, error: err instanceof Error ? err.message : String(err) };
   }
@@ -110,8 +157,8 @@ Deno.serve(async (req: Request) => {
 
     const reportId = inserted.id as string;
 
-    const emailTask = (async () => {
-      const result = await sendViaFormspree({
+    EdgeRuntime.waitUntil((async () => {
+      const result = await sendViaSmtp({
         name: name ?? "",
         email: email ?? "",
         description: description ?? "",
@@ -126,24 +173,14 @@ Deno.serve(async (req: Request) => {
           .from("support_reports")
           .update({
             email_sent: result.ok,
-            email_error: result.ok ? null : result.error,
+            email_error: result.ok ? null : (result as { ok: false; error: string }).error,
             email_attempted_at: new Date().toISOString(),
           })
           .eq("id", reportId);
       } catch {
         /* background task - swallow update errors */
       }
-    })();
-
-    try {
-      // @ts-ignore - EdgeRuntime is available at runtime in Supabase Edge Functions
-      if (typeof EdgeRuntime !== "undefined" && EdgeRuntime?.waitUntil) {
-        // @ts-ignore
-        EdgeRuntime.waitUntil(emailTask);
-      }
-    } catch {
-      /* ignore if not available */
-    }
+    })());
 
     return json({
       data: {
