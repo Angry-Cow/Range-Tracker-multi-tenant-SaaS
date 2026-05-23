@@ -123,6 +123,9 @@ async function sendApprovalEmail(tenant: { email: string; slug: string; name: st
   <p style="margin: 0 0 16px 0;">
     Thank you for selecting <strong>Range Tracker</strong> as your tool of choice!
   </p>
+  <p style="margin: 0 0 16px 0;">
+    <a href="https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf" style="color: #1155CC;">Download the Range Tracker&trade; Users Guide</a>
+  </p>
   <p style="margin: 0;">
     Range Tracker Account Services<br>
     <a href="https://rangetrackerapp.com" style="color: #1155CC;">https://rangetrackerapp.com</a>
@@ -139,6 +142,9 @@ Your private Tracker is available at rangetrackerapp.com.
 Log in with the email and password you signed up with.
 
 Thank you for selecting Range Tracker as your tool of choice!
+
+Download the Range Tracker(tm) Users Guide:
+https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf
 
 Range Tracker Account Services
 https://rangetrackerapp.com`;

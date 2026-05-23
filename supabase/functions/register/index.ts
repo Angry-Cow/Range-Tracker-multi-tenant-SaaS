@@ -35,6 +35,98 @@ function validatePassword(password: string): string | null {
   return null;
 }
 
+async function sendSmtp(to: string, subject: string, htmlBody: string, plainBody: string): Promise<void> {
+  const smtpHost = Deno.env.get("SMTP_HOST") || "mail.rangetracker.net";
+  const smtpPort = parseInt(Deno.env.get("SMTP_PORT") || "465");
+  const smtpUser = Deno.env.get("SMTP_USER") || "accounts@rangetracker.net";
+  const smtpPass = Deno.env.get("SMTP_PASS") || "";
+  const smtpFrom = Deno.env.get("SMTP_FROM") || "accounts@rangetracker.net";
+  const boundary = "----=_Part_RangeTracker_" + Date.now();
+  const multipartBody = `--${boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n${plainBody}\r\n--${boundary}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${htmlBody}\r\n--${boundary}--`;
+  try {
+    const conn = await Deno.connect({ hostname: smtpHost, port: smtpPort, transport: "tcp" });
+    const tlsConn = await Deno.startTls(conn, { hostname: smtpHost });
+    const encoder = new TextEncoder();
+    const decoder = new TextDecoder();
+    async function readLine(c: Deno.TlsConn): Promise<string> {
+      const buf = new Uint8Array(4096);
+      let result = "";
+      while (true) {
+        const n = await c.read(buf);
+        if (n === null) break;
+        result += decoder.decode(buf.subarray(0, n));
+        if (result.includes("\r\n")) break;
+      }
+      return result;
+    }
+    async function send(c: Deno.TlsConn, data: string): Promise<string> {
+      await c.write(encoder.encode(data + "\r\n"));
+      return await readLine(c);
+    }
+    await readLine(tlsConn);
+    await send(tlsConn, `EHLO rangetracker.net`);
+    await send(tlsConn, `AUTH LOGIN`);
+    await send(tlsConn, btoa(smtpUser));
+    await send(tlsConn, btoa(smtpPass));
+    await send(tlsConn, `MAIL FROM:<${smtpFrom}>`);
+    await send(tlsConn, `RCPT TO:<${to}>`);
+    await send(tlsConn, `DATA`);
+    await send(tlsConn, `From: Range Tracker <${smtpFrom}>\r\nTo: ${to}\r\nSubject: ${subject}\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary="${boundary}"\r\n\r\n${multipartBody}\r\n.`);
+    await send(tlsConn, `QUIT`);
+    tlsConn.close();
+  } catch (err) {
+    console.error("Failed to send email:", err);
+  }
+}
+
+async function sendWelcomeEmail(email: string, planType: string): Promise<void> {
+  const html = `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="font-family: Arial, sans-serif; font-size: 14px; color: #000000; line-height: 1.6; max-width: 600px; margin: 0; padding: 20px;">
+  <p style="margin: 0 0 16px 0;">
+    <strong>Welcome to the Range Tracker App.</strong> brought to you by <strong>T.O.L.R.<sup>&trade;</sup> Tools <span style="text-decoration: underline;">Of</span> Last Resort.</strong> <a href="https://tolr.net" style="color: #1155CC;">https://tolr.net</a>
+  </p>
+  <p style="margin: 0 0 16px 0;">
+    Thank you for your interest in our service.&nbsp; We know you will find it as useful for tracking your range activities as we do.<br>
+    Your account is registered with the <strong>${planType}</strong> program.
+  </p>
+  <p style="margin: 0 0 16px 0;">
+    Your private Tracker is available at <strong><a href="https://rangetrackerapp.com" style="color: #1155CC;">rangetrackerapp.com</a></strong><br>
+    Log in with the email and password you signed up with.
+  </p>
+  <p style="margin: 0 0 16px 0;">
+    Thank you for selecting <strong>Range Tracker</strong> as your tool of choice!
+  </p>
+  <p style="margin: 0 0 16px 0;">
+    <a href="https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf" style="color: #1155CC;">Download the Range Tracker&trade; Users Guide</a>
+  </p>
+  <p style="margin: 0;">
+    Range Tracker Account Services<br>
+    <a href="https://rangetrackerapp.com" style="color: #1155CC;">https://rangetrackerapp.com</a>
+  </p>
+</body>
+</html>`;
+
+  const plain = `Welcome to the Range Tracker App. brought to you by T.O.L.R.(tm) Tools Of Last Resort. https://tolr.net
+
+Thank you for your interest in our service.  We know you will find it as useful for tracking your range activities as we do.
+Your account is registered with the ${planType} program.
+
+Your private Tracker is available at rangetrackerapp.com.
+Log in with the email and password you signed up with.
+
+Thank you for selecting Range Tracker as your tool of choice!
+
+Download the Range Tracker(tm) Users Guide:
+https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf
+
+Range Tracker Account Services
+https://rangetrackerapp.com`;
+
+  await sendSmtp(email, "Your Range Tracker Application is Live", html, plain);
+}
+
 function getClientIp(req: Request): string {
   return (
     req.headers.get("cf-connecting-ip") ||
@@ -135,50 +227,7 @@ If you did not request this, you can safely ignore this email.
 Range Tracker Account Services
 https://rangetrackerapp.com`;
 
-          const smtpHost = Deno.env.get("SMTP_HOST") || "mail.rangetracker.net";
-          const smtpPort = parseInt(Deno.env.get("SMTP_PORT") || "465");
-          const smtpUser = Deno.env.get("SMTP_USER") || "accounts@rangetracker.net";
-          const smtpPass = Deno.env.get("SMTP_PASS") || "";
-          const smtpFrom = Deno.env.get("SMTP_FROM") || "accounts@rangetracker.net";
-          const boundary = "----=_Part_RangeTracker_" + Date.now();
-          const multipartBody = `--${boundary}\r\nContent-Type: text/plain; charset=UTF-8\r\n\r\n${plain}\r\n--${boundary}\r\nContent-Type: text/html; charset=UTF-8\r\n\r\n${html}\r\n--${boundary}--`;
-
-          EdgeRuntime.waitUntil((async () => {
-            try {
-              const conn = await Deno.connect({ hostname: smtpHost, port: smtpPort, transport: "tcp" });
-              const tlsConn = await Deno.startTls(conn, { hostname: smtpHost });
-              const encoder = new TextEncoder();
-              const decoder = new TextDecoder();
-              async function readLine(c: Deno.TlsConn): Promise<string> {
-                const buf = new Uint8Array(4096);
-                let result = "";
-                while (true) {
-                  const n = await c.read(buf);
-                  if (n === null) break;
-                  result += decoder.decode(buf.subarray(0, n));
-                  if (result.includes("\r\n")) break;
-                }
-                return result;
-              }
-              async function send(c: Deno.TlsConn, data: string): Promise<string> {
-                await c.write(encoder.encode(data + "\r\n"));
-                return await readLine(c);
-              }
-              await readLine(tlsConn);
-              await send(tlsConn, `EHLO rangetracker.net`);
-              await send(tlsConn, `AUTH LOGIN`);
-              await send(tlsConn, btoa(smtpUser));
-              await send(tlsConn, btoa(smtpPass));
-              await send(tlsConn, `MAIL FROM:<${smtpFrom}>`);
-              await send(tlsConn, `RCPT TO:<${email}>`);
-              await send(tlsConn, `DATA`);
-              await send(tlsConn, `From: Range Tracker <${smtpFrom}>\r\nTo: ${email}\r\nSubject: Range Tracker — Password Reset\r\nMIME-Version: 1.0\r\nContent-Type: multipart/alternative; boundary="${boundary}"\r\n\r\n${multipartBody}\r\n.`);
-              await send(tlsConn, `QUIT`);
-              tlsConn.close();
-            } catch (err) {
-              console.error("Failed to send tenant password reset email:", err);
-            }
-          })());
+          EdgeRuntime.waitUntil(sendSmtp(email, "Range Tracker — Password Reset", html, plain));
         }
       }
       return json({ data: "If that address is registered, a reset link has been sent.", error: null });
@@ -347,6 +396,7 @@ https://rangetrackerapp.com`;
 
           await supabase.from("tenants").delete().eq("id", newTenant.id);
 
+          EdgeRuntime.waitUntil(sendWelcomeEmail(email, plan.plan_name as string));
           return json({
             error: null,
             data: { slug, token: tenantToken, status: "active" },
@@ -354,6 +404,7 @@ https://rangetrackerapp.com`;
           });
         }
 
+        EdgeRuntime.waitUntil(sendWelcomeEmail(email, plan.plan_name as string));
         return json({ data: { slug, token: tenantToken, status: "active" }, error: null });
       }
 
@@ -372,6 +423,7 @@ https://rangetrackerapp.com`;
         pending_plan_type: pendingPlanType,
       });
       if (insertErr) return json({ error: insertErr.message }, 500);
+      EdgeRuntime.waitUntil(sendWelcomeEmail(email, effectivePlanType as string));
       return json({ data: { slug, token, status: "active" }, error: null });
     }
 
