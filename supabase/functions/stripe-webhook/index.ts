@@ -347,7 +347,7 @@ Deno.serve(async (req: Request) => {
       const previousAttributes = event.data.previous_attributes as Record<string, unknown> | undefined;
       const cancelAtPeriodEndJustSet =
         subscription.cancel_at_period_end === true &&
-        previousAttributes?.cancel_at_period_end === false;
+        previousAttributes?.cancel_at_period_end !== undefined;
 
       if (cancelAtPeriodEndJustSet && tenant.email && oldPlanType && oldPlanType !== "Free") {
         EdgeRuntime.waitUntil(sendDowngradeEmail(tenant.email, oldPlanType, periodEnd));
