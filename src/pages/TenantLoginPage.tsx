@@ -36,18 +36,29 @@ export function TenantLoginPage({ onSuccess }: Props) {
         headers: { 'Content-Type': 'application/json', 'Apikey': SUPABASE_ANON_KEY },
         body: JSON.stringify({ email: email.trim(), password }),
       });
-
       const result = await res.json();
-      if (!res.ok) {
-        setError(result.error || 'Login failed');
-        setLoading(false);
+
+      if (result.error) {
+        setError(result.error);
         return;
       }
 
-      setTenantCredentials(result.token, result.tenant.slug, result.tenant.site_name || result.tenant.slug);
+      if (!result.data) {
+        setError('No account found with that email address.');
+        return;
+      }
+
+      if (result.data.status !== 'active') {
+        setError('Your account is currently inactive. Please contact support.');
+        return;
+      }
+
+      // NOTE: setTenantCredentials takes (slug, token) in apiClient.ts!
+      setTenantCredentials(result.data.slug, result.data.token);
       onSuccess();
     } catch {
       setError('Network error. Please try again.');
+    } finally {
       setLoading(false);
     }
   }
