@@ -1,3 +1,4 @@
+import { LOGO_LIGHT } from '../assets/logos';
 import { useState } from 'react';
 import { KeyRound, LogIn } from 'lucide-react';
 
@@ -42,7 +43,7 @@ export function TenantResetPasswordPage({ token }: Props) {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
         <div className="flex items-center gap-4 mb-8">
           <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
-            <img src="Range_Tracker_Approved_Logo.png" alt="Range Tracker Logo" className="w-full h-full object-contain" />
+            <img src={LOGO_LIGHT} alt="Range Tracker Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-slate-900">Range Tracker</h1>
@@ -108,3 +109,4 @@ export function TenantResetPasswordPage({ token }: Props) {
     </div>
   );
 }
+

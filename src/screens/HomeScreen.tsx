@@ -1,3 +1,4 @@
+import { LOGO_LIGHT } from '../assets/logos';
 import { useState, useEffect } from 'react';
 import { Settings, History, Plus, LogOut, TrendingUp, CreditCard } from 'lucide-react';
 import { useApp } from '../contexts/AppContext';
@@ -187,7 +188,7 @@ export function HomeScreen() {
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl flex items-center justify-center">
-                <img src="/Range_Tracker_Approved_Logo.png" alt="Range Tracker Logo" className="w-full h-full object-contain" />
+                <img src={LOGO_LIGHT} alt="Range Tracker Logo" className="w-full h-full object-contain" />
               </div>
               <div>
                 <h1 className="text-3xl font-bold text-slate-900">Range Tracker</h1>
@@ -207,7 +208,7 @@ export function HomeScreen() {
 
           <div className="flex justify-end mb-4">
             <a
-              href="https://eustespordcqqytqpvsx.supabase.co/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf"
+              href="https://rtapp.supabase.angrycow.tech/storage/v1/object/public/range-photos/Range%20Tracker%20User%20Guide%20Mobile%20Edition%20Ver_00_02_35.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-2 text-sm text-white px-3 py-1.5 rounded-lg transition-colors"
@@ -347,3 +348,4 @@ export function HomeScreen() {
     </div>
   );
 }
+
