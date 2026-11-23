@@ -453,7 +453,7 @@ export function RegisterPage() {
       <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
         <div className="flex items-center gap-3 mb-8">
           <div className="w-12 h-12 rounded-xl flex items-center justify-center">
-            <img src="/Range_Tracker_Approved_Logo.png" alt="Logo" className="w-full h-full object-contain" />
+            <img src="Range_Tracker_Approved_Logo.png" alt="Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-slate-900">Request Access</h1>
